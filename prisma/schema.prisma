@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:supersecretpassword123@localhost:5432/flavorai?schema=public"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  recipes   Recipe[]
+  ratings   Rating[]
+}
+
+model Recipe {
+  id           Int      @id @default(autoincrement())
+  title        String
+  ingredients  String   // Текст или JSON.stringify(array)
+  instructions String
+  userId       Int
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id])
+  ratings      Rating[]
+}
+
+model Rating {
+  id       Int @id @default(autoincrement())
+  stars    Int // 1-5
+  userId   Int
+  recipeId Int
+  user     User   @relation(fields: [userId], references: [id])
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+
+  @@unique([userId, recipeId])
+}
