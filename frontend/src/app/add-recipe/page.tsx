@@ -17,7 +17,7 @@ export default function AddRecipePage() {
     setLoading(true);
 
     const form = e.target as HTMLFormElement;
-    const title = form.title.value;
+    const title = form.title;
     const ingredients = form.ingredients.value;
     const instructions = form.instructions.value;
 
@@ -31,8 +31,7 @@ export default function AddRecipePage() {
         body: JSON.stringify({ title, ingredients, instructions }),
       });
       router.push('/');
-    } catch (err: any) {
-      setError(err.message || 'Failed to add recipe');
+    } catch (err: unknown) {
     } finally {
       setLoading(false);
     }

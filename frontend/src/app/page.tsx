@@ -39,7 +39,7 @@ export default function Home() {
             <section key={r.id}>
               <h3>{r.title}</h3>
               <p>By: {r.user?.email}</p>
-              <Link href={`http://localhost:3000/recipe/${r.id}`}>View</Link>
+              <Link href={`/recipe?id=${r.id}`}>View</Link>
             </section>
           ))}
         </article>
